@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 import jp.co.sss.crud.db.DBController;
 
@@ -21,8 +22,9 @@ public class MainSystem {
 	 * @throws IOException 
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
+	 * @throws ParseException 
 	 */
-	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
+	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException, ParseException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		int menuNo = 0;
