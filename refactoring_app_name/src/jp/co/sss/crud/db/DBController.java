@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import jp.co.sss.crud.util.ConstantSQL;
 
@@ -149,8 +152,9 @@ public class DBController {
 				System.out.print("\t");
 
 				System.out.println(resultSet.getString("dept_name"));
-
 			}
+
+			System.out.println("");
 
 		} finally {
 			// クローズ処理
@@ -187,7 +191,7 @@ public class DBController {
 			preparedStatement = connection.prepareStatement(sql.toString());
 
 			// 検索条件となる値をバインド
-			preparedStatement.setString(1, deptId);
+			preparedStatement.setInt(1, Integer.parseInt(deptId));
 
 			// SQL文を実行
 			resultSet = preparedStatement.executeQuery();
@@ -227,16 +231,16 @@ public class DBController {
 				String deptIdString = resultSet.getString("dept_id");
 				int deptId2 = Integer.parseInt(deptIdString);
 				if (deptId2 == 1) {
-					System.out.print("営業部");
+					System.out.println("営業部");
 				} else if (deptId2 == 2) {
-					System.out.print("経理部");
+					System.out.println("経理部");
 				} else if (gender == 3) {
-					System.out.print("総務部");
+					System.out.println("総務部");
 
 				}
-
 			}
 
+			System.out.println("");
 		} finally {
 			// クローズ処理
 			DBManager.close(resultSet);
@@ -257,9 +261,10 @@ public class DBController {
 	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
 	 * @throws SQLException            DB処理でエラーが発生した場合に送出
 	 * @throws IOException             入力処理でエラーが発生した場合に送出
+	 * @throws ParseException 
 	 */
 	public static void insert(String empName, String gender, String birthday, String deptId)
-			throws ClassNotFoundException, SQLException, IOException {
+			throws ClassNotFoundException, SQLException, IOException, ParseException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
@@ -271,9 +276,10 @@ public class DBController {
 
 			// 入力値をバインド
 			preparedStatement.setString(1, empName);
-			preparedStatement.setString(2, gender);
-			preparedStatement.setString(3, birthday);
-			preparedStatement.setString(4, deptId);
+			preparedStatement.setInt(2, Integer.parseInt(gender));
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+			preparedStatement.setObject(3, sdf.parse(birthday), Types.DATE);
+			preparedStatement.setInt(4, Integer.parseInt(deptId));
 
 			// SQL文を実行
 			preparedStatement.executeUpdate();
@@ -293,9 +299,10 @@ public class DBController {
 	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
 	 * @throws SQLException            DB処理でエラーが発生した場合に送出
 	 * @throws IOException             入力処理でエラーが発生した場合に送出
+	 * @throws ParseException 
 	 */
 	public static void update(String empId)
-			throws ClassNotFoundException, SQLException, IOException {
+			throws ClassNotFoundException, SQLException, IOException, ParseException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -322,10 +329,11 @@ public class DBController {
 
 			// 入力値をバインド
 			preparedStatement.setString(1, emp_name);
-			preparedStatement.setString(2, gender);
-			preparedStatement.setString(3, birthday);
-			preparedStatement.setString(4, deptId);
-			preparedStatement.setString(5, empId);
+			preparedStatement.setInt(2, Integer.parseInt(gender));
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+			preparedStatement.setObject(3, sdf.parse(birthday), Types.DATE);
+			preparedStatement.setInt(4, Integer.parseInt(deptId));
+			preparedStatement.setInt(5, Integer.parseInt(empId));
 
 			// SQL文の実行(失敗時は戻り値0)
 			preparedStatement.executeUpdate();
@@ -358,8 +366,8 @@ public class DBController {
 			// ステートメントの作成
 			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_DELETE);
 
-			// 社員名をバインド
-			preparedStatement.setString(1, empId);
+			// 社員IDをバインド
+			preparedStatement.setInt(1, Integer.parseInt(empId));
 
 			// SQL文の実行(失敗時は戻り値0)
 			preparedStatement.executeUpdate();
