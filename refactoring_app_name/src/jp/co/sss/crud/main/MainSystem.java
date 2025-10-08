@@ -49,7 +49,7 @@ public class MainSystem {
 			switch (menuNo) {
 			case 1:
 				// 全件表示機能の呼出
-				DBController.find();
+				DBController.findAllEmployee();
 				break;
 
 			case 2:
@@ -57,7 +57,7 @@ public class MainSystem {
 				System.out.print("社員名:");
 
 				// 検索機能の呼出
-				DBController.findB();
+				DBController.findEmployeeByName();
 				break;
 
 			case 3:
@@ -66,7 +66,7 @@ public class MainSystem {
 				String deptIdA = br.readLine();
 
 				// 検索機能の呼出
-				DBController.findC(deptIdA);
+				DBController.findEmployeesByDeptId(deptIdA);
 				break;
 
 			case 4:
@@ -81,7 +81,7 @@ public class MainSystem {
 				String deptIdB = br.readLine();
 
 				// 登録機能の呼出
-				DBController.insert(emp_name, Seibetsu, birthday, deptIdB);
+				DBController.insertEmployee(emp_name, Seibetsu, birthday, deptIdB);
 				break;
 
 			case 5:
@@ -93,7 +93,7 @@ public class MainSystem {
 				Integer.parseInt(empId_1);
 
 				// 更新機能の呼出
-				DBController.update(empId_1);
+				DBController.updateEmployeeById(empId_1);
 				System.out.println("社員情報を更新しました");
 
 				break;
@@ -103,7 +103,7 @@ public class MainSystem {
 				System.out.print("削除する社員の社員IDを入力してください：");
 
 				// 削除機能の呼出
-				DBController.delete();
+				DBController.deleteEmployeeById();
 				break;
 
 			}
