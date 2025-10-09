@@ -33,8 +33,8 @@ public class ConstantMsg {
 	public static final String NO_EMPLOYEE = "該当者はいませんでした";
 	/**半角数字入力*/
 	public static final String NUMBER_VALIDATION = "半角数字で入力してください";
-	/**20文字制限*/
-	public static final String SIZE_VALIDATION = "20文字以内で入力してください";
+	/**30文字制限*/
+	public static final String SIZE_VALIDATION = "30文字以内で入力してください";
 	/**範囲指定*/
 	public static final String RANGE_VALIDATION = " のいずれかを入力してください";
 	/**日付形式*/
