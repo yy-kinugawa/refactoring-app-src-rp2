@@ -1,7 +1,7 @@
 package jp.co.sss.crud.dto;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import jp.co.sss.crud.util.Gender;
 
