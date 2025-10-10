@@ -1,8 +1,6 @@
 package jp.co.sss.crud.db;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,10 +19,10 @@ import jp.co.sss.crud.util.ConstantSQL;
  *
  * @author System Shared
  */
-public class DBController {
+public class EmployeeDAO {
 
 	/** インスタンス化を禁止 */
-	private DBController() {
+	private EmployeeDAO() {
 	}
 
 	/**
@@ -33,7 +31,7 @@ public class DBController {
 	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
 	 * @throws SQLException           DB処理でエラーが発生した場合に送出
 	 */
-	public static List<Employee> findAllEmployee() throws ClassNotFoundException, SQLException {
+	public static List<Employee> findAllEmployee() throws ClassNotFoundException, SQLException, ParseException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -61,8 +59,8 @@ public class DBController {
 				ones.setEmpId(Integer.parseInt(resultSet.getString("emp_id")));
 				ones.setEmpName(resultSet.getString("emp_name"));
 				ones.setGender(Integer.parseInt(resultSet.getString("gender")));
-				ones.setBirthday(resultSet.getTimestamp("birthday"));
-				ones.setDeptId(Integer.parseInt(resultSet.getString("dept_id")));
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+				ones.setBirthday(sdf.parse(resultSet.getString("birthday")));
 				ones.setDeptName(resultSet.getString("dept_name"));
 
 				employees.add(ones);
@@ -87,11 +85,8 @@ public class DBController {
 	 * @throws SQLException           DB処理でエラーが発生した場合に送出
 	 * @throws IOException            入力処理でエラーが発生した場合に送出
 	 */
-	public static List<Employee> findEmployeeByName() throws ClassNotFoundException, SQLException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-		// 検索ワード
-		String searchWord = br.readLine();
+	public static List<Employee> findEmployeeByName(String searchWord)
+			throws ClassNotFoundException, SQLException, IOException, ParseException {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -125,8 +120,8 @@ public class DBController {
 				ones.setEmpId(Integer.parseInt(resultSet.getString("emp_id")));
 				ones.setEmpName(resultSet.getString("emp_name"));
 				ones.setGender(Integer.parseInt(resultSet.getString("gender")));
-				ones.setBirthday(resultSet.getTimestamp("birthday"));
-				ones.setDeptId(Integer.parseInt(resultSet.getString("dept_id")));
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+				ones.setBirthday(sdf.parse(resultSet.getString("birthday")));
 				ones.setDeptName(resultSet.getString("dept_name"));
 
 				employees.add(ones);
@@ -151,8 +146,8 @@ public class DBController {
 	 * @throws SQLException           DB処理でエラーが発生した場合に送出
 	 * @throws IOException            入力処理でエラーが発生した場合に送出
 	 */
-	public static List<Employee> findEmployeesByDeptId(String inputDeptId)
-			throws ClassNotFoundException, SQLException, IOException {
+	public static List<Employee> findEmployeesByDeptId(Integer inputDeptId)
+			throws ClassNotFoundException, SQLException, IOException, ParseException {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -170,7 +165,7 @@ public class DBController {
 			preparedStatement = connection.prepareStatement(sql.toString());
 
 			// 検索条件となる値をバインド
-			preparedStatement.setInt(1, Integer.parseInt(inputDeptId));
+			preparedStatement.setInt(1, inputDeptId);
 
 			// SQL文を実行
 			resultSet = preparedStatement.executeQuery();
@@ -187,8 +182,8 @@ public class DBController {
 				ones.setEmpId(Integer.parseInt(resultSet.getString("emp_id")));
 				ones.setEmpName(resultSet.getString("emp_name"));
 				ones.setGender(Integer.parseInt(resultSet.getString("gender")));
-				ones.setBirthday(resultSet.getTimestamp("birthday"));
-				ones.setDeptId(Integer.parseInt(resultSet.getString("dept_id")));
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+				ones.setBirthday(sdf.parse(resultSet.getString("birthday")));
 				ones.setDeptName(resultSet.getString("dept_name"));
 
 				employees.add(ones);
@@ -218,7 +213,7 @@ public class DBController {
 	 * @throws IOException             入力処理でエラーが発生した場合に送出
 	 * @throws ParseException 
 	 */
-	public static int insertEmployee(String empName, String gender, String birthday, String deptId)
+	public static int insertEmployee(Employee employee)
 			throws ClassNotFoundException, SQLException, IOException, ParseException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -230,13 +225,12 @@ public class DBController {
 			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_INSERT);
 
 			// 入力値をバインド
-			preparedStatement.setString(1, empName);
-			preparedStatement.setInt(2, Integer.parseInt(gender));
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			preparedStatement.setObject(3, sdf.parse(birthday), Types.DATE);
-			preparedStatement.setInt(4, Integer.parseInt(deptId));
+			preparedStatement.setString(1, employee.getEmpName());
+			preparedStatement.setInt(2, employee.getGender());
+			preparedStatement.setObject(3, employee.getBirthday(), Types.DATE);
+			preparedStatement.setInt(4, employee.getDeptId());
 
-			// SQL文を実行
+			// SQL文の実行(失敗時は戻り値0)
 			return preparedStatement.executeUpdate();
 
 		} finally {
@@ -254,11 +248,11 @@ public class DBController {
 	 * @throws IOException             入力処理でエラーが発生した場合に送出
 	 * @throws ParseException 
 	 */
-	public static int updateEmployeeById(String empId)
+	public static int updateEmployeeById(Employee employee)
 			throws ClassNotFoundException, SQLException, IOException, ParseException {
+
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		try {
 			// データベースに接続
@@ -267,26 +261,12 @@ public class DBController {
 			// ステートメントの作成
 			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_UPDATE);
 
-			System.out.print("社員名：");
-			String empName = br.readLine();
-			// 性別を入力
-			System.out.print("性別(0:回答しない, 1:男性, 2:女性, 9:その他):");
-			String gender = br.readLine();
-			// 誕生日を入力
-			System.out.print("生年月日(西暦年/月/日)：");
-			String birthday = br.readLine();
-
-			// 部署IDを入力
-			System.out.print("部署ID(1：営業部、2：経理部、3：総務部)：");
-			String deptId = br.readLine();
-
 			// 入力値をバインド
-			preparedStatement.setString(1, empName);
-			preparedStatement.setInt(2, Integer.parseInt(gender));
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			preparedStatement.setObject(3, sdf.parse(birthday), Types.DATE);
-			preparedStatement.setInt(4, Integer.parseInt(deptId));
-			preparedStatement.setInt(5, Integer.parseInt(empId));
+			preparedStatement.setString(1, employee.getEmpName());
+			preparedStatement.setInt(2, employee.getGender());
+			preparedStatement.setObject(3, employee.getBirthday(), Types.DATE);
+			preparedStatement.setInt(4, employee.getDeptId());
+			preparedStatement.setInt(5, employee.getEmpId());
 
 			// SQL文の実行(失敗時は戻り値0)
 			return preparedStatement.executeUpdate();
@@ -306,36 +286,29 @@ public class DBController {
 	 * @throws SQLException           DB処理でエラーが発生した場合に送出
 	 * @throws IOException            入力処理でエラーが発生した場合に送出
 	 */
-	public static int deleteEmployeeById()
+	public static int deleteEmployeeById(Integer empId)
 			throws ClassNotFoundException, SQLException, IOException, ParseException {
+
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		try {
 			// データベースに接続
 			connection = DBManager.getConnection();
-			String empId = br.readLine();
 
 			// ステートメントの作成
 			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_DELETE);
 
 			// 社員IDをバインド
-			preparedStatement.setInt(1, Integer.parseInt(empId));
+			preparedStatement.setInt(1, empId);
 
 			// SQL文の実行(失敗時は戻り値0)
 			return preparedStatement.executeUpdate();
-		}
-
-		finally {
-			// Statementをクローズ
-			try {
-				DBManager.close(preparedStatement);
-				DBManager.close(connection);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		} finally {
+			// クローズ処理
+			DBManager.close(preparedStatement);
 			// DBとの接続を切断
+			DBManager.close(connection);
 		}
 	}
 }
