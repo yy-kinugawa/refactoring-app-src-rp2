@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.co.sss.crud.dto.Department;
+import jp.co.sss.crud.exception.SystemErrorException;
+import jp.co.sss.crud.util.ConstantMsg;
 import jp.co.sss.crud.util.ConstantSQL;
 
 public class DepartmentDAO {
@@ -22,7 +24,7 @@ public class DepartmentDAO {
 	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
 	 * @throws SQLException           DB処理でエラーが発生した場合に送出
 	 */
-	public static List<Department> findAllDepartment() throws ClassNotFoundException, SQLException {
+	public static List<Department> findAllDepartment() throws SystemErrorException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -47,7 +49,7 @@ public class DepartmentDAO {
 			// レコードを出力
 			while (resultSet.next()) {
 				Department department = new Department();
-				department.setDeptId(Integer.parseInt(resultSet.getString("dept_id")));
+				department.setDeptId(resultSet.getString("dept_id"));
 				department.setDeptName(resultSet.getString("dept_name"));
 
 				deptList.add(department);
@@ -55,13 +57,21 @@ public class DepartmentDAO {
 
 			return deptList;
 
+		} catch (ClassNotFoundException | SQLException e) {
+
+			throw new SystemErrorException(ConstantMsg.GET_DATA_ERROR, e);
+
 		} finally {
-			// ResultSetをクローズ
-			DBManager.close(resultSet);
-			// Statementをクローズ
-			DBManager.close(preparedStatement);
-			// DBとの接続を切断
-			DBManager.close(connection);
+			try {
+				// ResultSetをクローズ
+				DBManager.close(resultSet);
+				// Statementをクローズ
+				DBManager.close(preparedStatement);
+				// DBとの接続を切断
+				DBManager.close(connection);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
