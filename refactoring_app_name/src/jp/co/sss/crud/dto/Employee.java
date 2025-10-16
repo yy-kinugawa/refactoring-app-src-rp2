@@ -1,30 +1,27 @@
 package jp.co.sss.crud.dto;
 
-import java.util.Date;
-import java.text.SimpleDateFormat;
-
 import jp.co.sss.crud.util.Gender;
 
 public class Employee {
 
 	//社員番号
-	private int empId;
+	private String empId;
 	//社員名
 	private String empName;
 	//性別
-	private int gender;
+	private String gender;
 	//生年月日
-	private Date birthday;
+	private String birthday;
 	//部署ID
-	private int deptId;
+	private String deptId;
 	//部署名
 	private String deptName;
 
-	public int getEmpId() {
+	public String getEmpId() {
 		return empId;
 	}
 
-	public void setEmpId(int empId) {
+	public void setEmpId(String empId) {
 		this.empId = empId;
 	}
 
@@ -36,27 +33,27 @@ public class Employee {
 		this.empName = empName;
 	}
 
-	public int getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(int gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 
-	public int getDeptId() {
+	public String getDeptId() {
 		return deptId;
 	}
 
-	public void setDeptId(int deptId) {
+	public void setDeptId(String deptId) {
 		this.deptId = deptId;
 	}
 
@@ -70,11 +67,10 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		return empId + "\t"
 				+ empName + "\t"
 				+ Gender.fromNumeric(gender) + "\t"
-				+ sdf.format(birthday) + "\t"
+				+ birthday + "\t"
 				+ deptName;
 	}
 

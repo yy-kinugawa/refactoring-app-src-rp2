@@ -3,15 +3,15 @@ package jp.co.sss.crud.dto;
 public class Department {
 
 	//部署ID
-	private int deptId;
+	private String deptId;
 	//部署名
 	private String deptName;
 
-	public int getDeptId() {
+	public String getDeptId() {
 		return deptId;
 	}
 
-	public void setDeptId(int deptId) {
+	public void setDeptId(String deptId) {
 		this.deptId = deptId;
 	}
 

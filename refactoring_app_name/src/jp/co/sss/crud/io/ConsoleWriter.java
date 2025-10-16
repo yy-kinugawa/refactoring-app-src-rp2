@@ -1,11 +1,12 @@
 package jp.co.sss.crud.io;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import jp.co.sss.crud.db.DepartmentDAO;
 import jp.co.sss.crud.dto.Department;
 import jp.co.sss.crud.dto.Employee;
+import jp.co.sss.crud.exception.IllegalInputException;
+import jp.co.sss.crud.exception.SystemErrorException;
 import jp.co.sss.crud.util.ConstantMsg;
 import jp.co.sss.crud.util.Gender;
 
@@ -44,7 +45,7 @@ public class ConsoleWriter {
 				System.out.println(e);
 			}
 		} else {
-			System.out.println(ConstantMsg.NO_EMPLOYEE);
+			showNoEmployee();
 		}
 	}
 
@@ -81,7 +82,7 @@ public class ConsoleWriter {
 	/**
 	 * 部署ID入力表示
 	 */
-	public void showInputDeptId() throws ClassNotFoundException, SQLException {
+	public void showInputDeptId() throws SystemErrorException, IllegalInputException {
 		List<Department> deptList = DepartmentDAO.findAllDepartment();
 		System.out.print("部署ID(");
 		for (int i = 0; i < deptList.size(); i++) {
@@ -109,9 +110,37 @@ public class ConsoleWriter {
 	}
 
 	/**
+	 * 社員新規登録完了通知
+	 */
+	public void showCompleteInsert() {
+		System.out.println(ConstantMsg.COMP_INSERT);
+	}
+
+	/**
+	 * 社員情報更新完了通知
+	 */
+	public void showCompleteUpdate() {
+		System.out.println(ConstantMsg.COMP_UPDATE);
+	}
+
+	/**
+	 * 社員情報削除完了通知
+	 */
+	public void showCompleteDelete() {
+		System.out.println(ConstantMsg.COMP_DELETE);
+	}
+
+	/**
 	 * システム終了案内
 	 */
 	public void showSystemEnd() {
 		System.out.println(ConstantMsg.END_GUIDE);
+	}
+
+	/**
+	 * 社員情報が無し
+	 */
+	public void showNoEmployee() {
+		System.out.println(ConstantMsg.NO_EMPLOYEE);
 	}
 }

@@ -48,16 +48,18 @@ public class ConstantMsg {
 	/**30文字制限*/
 	public static final String SIZE_VALIDATION = "30文字以内で入力してください";
 	/**範囲指定*/
-	public static final String RANGE_VALIDATION = " のいずれかを入力してください";
+	public static final String RANGE_VALIDATION = "のいずれかを入力してください";
 	/**日付形式*/
 	public static final String DATE_VALIDATION = "(yyyy/mm/dd)の形式で入力してください";
-	/**検索*/
-	public static final String ERROR_SELECT = "社員情報の検索に失敗しました";
-	/**登録*/
+	/**入力エラーメッセージ*/
+	public static final String INPUT_ERROR = "入力の読み込みに失敗しました";
+	/**検索エラーメッセージ*/
+	public static final String GET_DATA_ERROR = "データの取得に失敗しました";
+	/**登録エラーメッセージ*/
 	public static final String ERROR_INSERT = "社員情報の登録に失敗しました";
-	/**更新*/
+	/**更新エラーメッセージ*/
 	public static final String ERROR_UPDATE = "社員情報の更新に失敗しました";
-	/**削除*/
+	/**削除エラーメッセージ*/
 	public static final String ERROR_DELETE = "社員情報の削除に失敗しました";
 
 	/**
