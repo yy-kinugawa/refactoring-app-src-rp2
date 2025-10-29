@@ -1,6 +1,5 @@
 package jp.co.sss.crud.db;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,19 +21,30 @@ import jp.co.sss.crud.util.ConstantSQL;
  *
  * @author System Shared
  */
-public class EmployeeDAO {
+public class EmployeeDAO implements IEmployeeDAO {
+
+	private static final EmployeeDAO EMPLOYEE_DAO = new EmployeeDAO();
 
 	/** インスタンス化を禁止 */
 	private EmployeeDAO() {
 	}
 
 	/**
+	 * インスタンス生成
+	 * @return EmpyeeDAO
+	 */
+
+	public static EmployeeDAO getInstance() {
+		return EMPLOYEE_DAO;
+	}
+
+	/**
 	 * 全ての社員情報を検索
 	 *
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException           DB処理でエラーが発生した場合に送出
+	 * @throws SystemErrorException 
+	 * @throws IllegalInputException 
 	 */
-	public static List<Employee> findAllEmployee() throws SystemErrorException, IllegalInputException {
+	public List<Employee> findAllEmployee() throws SystemErrorException, IllegalInputException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -91,11 +101,11 @@ public class EmployeeDAO {
 	/**
 	 * 社員名に該当する社員情報を検索
 	 *
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException           DB処理でエラーが発生した場合に送出
-	 * @throws IOException            入力処理でエラーが発生した場合に送出
+	 * @param String 検索ワード
+	 * @throws SystemErrorException 
+	 * @throws IllegalInputException 
 	 */
-	public static List<Employee> findEmployeeByName(String searchWord)
+	public List<Employee> findEmployeeByName(String searchWord)
 			throws SystemErrorException, IllegalInputException {
 
 		Connection connection = null;
@@ -158,12 +168,12 @@ public class EmployeeDAO {
 
 	/**
 	 * 部署IDに該当する社員情報を検索
-	 *
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException           DB処理でエラーが発生した場合に送出
-	 * @throws IOException            入力処理でエラーが発生した場合に送出
+	 * 
+	 * @param String 部署ID
+	 * @throws SystemErrorException 
+	 * @throws IllegalInputException 
 	 */
-	public static List<Employee> findEmployeesByDeptId(String inputDeptId)
+	public List<Employee> findEmployeesByDeptId(String inputDeptId)
 			throws SystemErrorException, IllegalInputException {
 
 		Connection connection = null;
@@ -228,16 +238,11 @@ public class EmployeeDAO {
 	/**
 	 * 社員情報を1件登録
 	 * 
-	 * @param empName 社員名
-	 * @param gender 性別
-	 * @param birthday 生年月日
-	 * @param deptId 部署ID
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException            DB処理でエラーが発生した場合に送出
-	 * @throws IOException             入力処理でエラーが発生した場合に送出
-	 * @throws ParseException 
+	 * @param Employee
+	 * @throws SystemErrorException 
+	 * @throws IllegalInputException           
 	 */
-	public static int insertEmployee(Employee employee) throws SystemErrorException, IllegalInputException {
+	public int insertEmployee(Employee employee) throws SystemErrorException, IllegalInputException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
@@ -276,13 +281,11 @@ public class EmployeeDAO {
 	/**
 	 * 社員情報を1件更新
 	 * 
-	 * @param empId 社員ID
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException            DB処理でエラーが発生した場合に送出
-	 * @throws IOException             入力処理でエラーが発生した場合に送出
-	 * @throws ParseException 
+	 * @param Employee
+	 * @throws SystemErrorException 
+	 * @throws IllegalInputException   
 	 */
-	public static int updateEmployeeById(Employee employee) throws SystemErrorException, IllegalInputException {
+	public int updateEmployeeById(Employee employee) throws SystemErrorException, IllegalInputException {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -324,11 +327,11 @@ public class EmployeeDAO {
 	/**
 	 * 社員情報を1件削除
 	 *
-	 * @throws ClassNotFoundException ドライバクラスが不在の場合に送出
-	 * @throws SQLException           DB処理でエラーが発生した場合に送出
-	 * @throws IOException            入力処理でエラーが発生した場合に送出
+	 * @param String 社員ID
+	 * @throws SystemErrorException 
+	 * @throws IllegalInputException   
 	 */
-	public static int deleteEmployeeById(String empId) throws SystemErrorException, IllegalInputException {
+	public int deleteEmployeeById(String empId) throws SystemErrorException, IllegalInputException {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
