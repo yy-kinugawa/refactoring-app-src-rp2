@@ -17,16 +17,6 @@ public class ConstantMsg {
 	 */
 	/**タイトル*/
 	public static final String MENU_TITLE = "=== 社員管理システム ===";
-	/**メニュー項目*/
-	public static final String[] MENU_LIST = {
-			"全件表示",
-			"社員名検索",
-			"部署ID検索",
-			"新規登録",
-			"更新",
-			"削除",
-			"終了"
-	};
 	/**メニュー入力*/
 	public static final String MENU_GUIDE = "メニュー番号を入力してください：";
 	/**社員情報項目*/

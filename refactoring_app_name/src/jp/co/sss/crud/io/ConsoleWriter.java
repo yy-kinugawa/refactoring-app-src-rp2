@@ -9,6 +9,7 @@ import jp.co.sss.crud.exception.IllegalInputException;
 import jp.co.sss.crud.exception.SystemErrorException;
 import jp.co.sss.crud.util.ConstantMsg;
 import jp.co.sss.crud.util.Gender;
+import jp.co.sss.crud.util.Menu;
 
 /**
  * コンソールの出力クラス
@@ -23,14 +24,10 @@ public class ConsoleWriter {
 	 */
 	public void showMenu() {
 		System.out.println(ConstantMsg.MENU_TITLE);
-		//表示NOを設定
-		int menuNum = 1;
-		for (String str : ConstantMsg.MENU_LIST) {
-			System.out.println(menuNum + "." + str);
-			//次の表示NO
-			menuNum++;
+		Menu[] menuList = Menu.values();
+		for (Menu menu : menuList) {
+			System.out.println(menu);
 		}
-
 		System.out.println(ConstantMsg.MENU_GUIDE);
 	}
 
