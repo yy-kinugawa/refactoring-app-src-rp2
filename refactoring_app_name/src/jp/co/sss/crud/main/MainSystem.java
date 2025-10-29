@@ -1,9 +1,5 @@
 package jp.co.sss.crud.main;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
-
 import jp.co.sss.crud.exception.IllegalInputException;
 import jp.co.sss.crud.exception.SystemErrorException;
 import jp.co.sss.crud.io.ConsoleWriter;
@@ -20,10 +16,8 @@ public class MainSystem {
 	/**
 	 * 社員管理システムを起動
 	 *
-	 * @throws IOException 
-	 * @throws SQLException 
-	 * @throws ClassNotFoundException 
-	 * @throws ParseException 
+	 * @throws SystemErrorException
+	 * @throws IllegalInputException
 	 */
 	public static void main(String[] args) throws SystemErrorException, IllegalInputException {
 		MenuNoReader menuNoReader = new MenuNoReader();
@@ -32,7 +26,8 @@ public class MainSystem {
 		boolean endCheck = true;
 
 		do {
-			try {//メニューの表示
+			try {
+				//メニューの表示
 				consoleWriter.showMenu();
 
 				//メニュー番号の入力

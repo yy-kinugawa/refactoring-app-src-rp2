@@ -11,14 +11,21 @@ import jp.co.sss.crud.exception.IllegalInputException;
 import jp.co.sss.crud.exception.SystemErrorException;
 import jp.co.sss.crud.util.ConstantMsg;
 
+/**
+ * コンソールの部署ID入力クラス
+ * 
+ * @author 絹川
+ */
+
 public class EmployeeDeptIdReader implements IConsoleReader {
 
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 	/**
 	 * 部署入力
-	 * @return int 部署ID
-	 * @throws IOException
+	 * @return String 部署ID
+	 * @throws SystemErrorException
+	 * @throws IllegalInputException
 	 */
 	public String input() throws SystemErrorException, IllegalInputException {
 		try {
@@ -42,8 +49,16 @@ public class EmployeeDeptIdReader implements IConsoleReader {
 		}
 	}
 
+	/**
+	 * バリデーションチェック
+	 * @param String 入力(部署ID)
+	 * @return boolean
+	 * @throws SystemErrorException
+	 */
 	public boolean isValid(String input) throws SystemErrorException {
+		//部署情報の取得
 		List<Department> deptList = DepartmentDAO.findAllDepartment();
+		//バリデーションチェック(取得した部署ID)
 		boolean check = false;
 		for (int i = 0; i < deptList.size(); i++) {
 			if (input.equals(deptList.get(i).getDeptId())) {

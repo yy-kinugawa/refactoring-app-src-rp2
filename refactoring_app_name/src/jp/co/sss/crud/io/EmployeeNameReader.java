@@ -8,6 +8,11 @@ import jp.co.sss.crud.exception.IllegalInputException;
 import jp.co.sss.crud.exception.SystemErrorException;
 import jp.co.sss.crud.util.ConstantMsg;
 
+/**
+ * コンソールの社員名入力クラス
+ * 
+ * @author 絹川
+ */
 public class EmployeeNameReader implements IConsoleReader {
 
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -15,7 +20,8 @@ public class EmployeeNameReader implements IConsoleReader {
 	/**
 	 * 社員名入力
 	 * @return String 社員名
-	 * @throws IOException
+	 * @throws SystemErrorException
+	 * @throws IllegalInputException
 	 */
 	public String input() throws SystemErrorException, IllegalInputException {
 		try {
@@ -30,7 +36,14 @@ public class EmployeeNameReader implements IConsoleReader {
 		}
 	}
 
+	/**
+	 * バリデーションチェック
+	 * @param String 入力(社員名)
+	 * @return boolean
+	 * @throws SystemErrorException
+	 */
 	public boolean isValid(String input) {
+		//30文字以内
 		return input.matches("^.{1,30}$");
 	}
 }

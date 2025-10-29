@@ -1,9 +1,16 @@
 package jp.co.sss.crud.util;
 
+/**
+ * 性別のenumクラス
+ * 
+ * @author 絹川
+ */
 public enum Gender {
 	NO_ANSWER("回答なし", "0"), MALE("男性", "1"), FEMALE("女性", "2"), OTHER("その他", "9");
 
+	//表記名
 	private final String japanese;
+	//No
 	private final String number;
 
 	Gender(String japanese, String number) {

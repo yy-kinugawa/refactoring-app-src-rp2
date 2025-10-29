@@ -8,6 +8,12 @@ import jp.co.sss.crud.exception.IllegalInputException;
 import jp.co.sss.crud.exception.SystemErrorException;
 import jp.co.sss.crud.util.ConstantMsg;
 
+/**
+ * コンソールの誕生日入力クラス
+ * 
+ * @author 絹川
+ */
+
 public class EmployeeBirthReader implements IConsoleReader {
 
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -15,7 +21,8 @@ public class EmployeeBirthReader implements IConsoleReader {
 	/**
 	 * 誕生日入力
 	 * @return String 誕生日(yyyy/mm/dd)
-	 * @throws IOException
+	 * @throws SystemErrorException
+	 * @throws IllegalInputException
 	 */
 	public String input() throws SystemErrorException, IllegalInputException {
 		try {
@@ -29,7 +36,14 @@ public class EmployeeBirthReader implements IConsoleReader {
 		}
 	}
 
+	/**
+	 * バリデーションチェック
+	 * @param String 入力(誕生日)
+	 * @return boolean
+	 * @throws SystemErrorException
+	 */
 	public boolean isValid(String input) {
+		//yyyy/mm/dd
 		return input.matches("^[0-9]{4}/(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])$");
 	}
 }

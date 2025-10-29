@@ -12,6 +12,11 @@ import jp.co.sss.crud.exception.SystemErrorException;
 import jp.co.sss.crud.util.ConstantMsg;
 import jp.co.sss.crud.util.ConstantSQL;
 
+/**
+ * 部署情報のDB操作処理用のクラス
+ * 
+ * @author 絹川
+ */
 public class DepartmentDAO {
 
 	/** インスタンス化を禁止 */

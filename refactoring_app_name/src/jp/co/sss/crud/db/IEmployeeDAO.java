@@ -6,6 +6,11 @@ import jp.co.sss.crud.dto.Employee;
 import jp.co.sss.crud.exception.IllegalInputException;
 import jp.co.sss.crud.exception.SystemErrorException;
 
+/**
+ * 社員情報のDB操作処理用のインターフェース
+ * 
+ * @author 絹川
+ */
 public interface IEmployeeDAO {
 
 	/**

@@ -11,14 +11,18 @@ import jp.co.sss.crud.io.ConsoleWriter;
 import jp.co.sss.crud.io.EmployeeNameReader;
 import jp.co.sss.crud.io.IConsoleReader;
 
+/**
+ * 社員情報サービス(社員名検索)
+ * 
+ * @author 絹川
+ */
 public class MenuNo2EmployeeService implements IEmployeeService {
 
 	private ConsoleWriter consoleWriter = new ConsoleWriter();
-
 	private static final MenuNo2EmployeeService menuNo2EmployeeService = new MenuNo2EmployeeService();
 
+	/** インスタンス化を禁止 */
 	private MenuNo2EmployeeService() {
-
 	}
 
 	/**
@@ -35,10 +39,13 @@ public class MenuNo2EmployeeService implements IEmployeeService {
 	 * @return boolean
 	 */
 	public boolean execute() throws SystemErrorException, IllegalInputException {
+		//社員名入力
 		IConsoleReader consoleReader = new EmployeeNameReader();
 		consoleWriter.showInputEmployeeName();
 		IEmployeeDAO employeeDAO = EmployeeDAO.getInstance();
+		//社員情報の取得
 		List<Employee> employees = employeeDAO.findEmployeeByName(consoleReader.input());
+		//社員情報の表示
 		consoleWriter.showEmployee(employees);
 
 		return true;

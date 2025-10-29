@@ -2,6 +2,11 @@ package jp.co.sss.crud.dto;
 
 import jp.co.sss.crud.util.Gender;
 
+/**
+ * 社員情報エンティティ
+ * 
+ * @author 絹川
+ */
 public class Employee {
 
 	//社員番号

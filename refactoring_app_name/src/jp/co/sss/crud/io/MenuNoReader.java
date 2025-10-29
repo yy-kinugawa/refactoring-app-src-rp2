@@ -8,14 +8,20 @@ import jp.co.sss.crud.exception.IllegalInputException;
 import jp.co.sss.crud.exception.SystemErrorException;
 import jp.co.sss.crud.util.ConstantMsg;
 
+/**
+ * コンソールのメニューNo入力クラス
+ * 
+ * @author 絹川
+ */
 public class MenuNoReader implements IConsoleReader {
 
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 	/**
 	 * メニューNO入力
-	 * @return int メニューNO
+	 * @return String メニューNO
 	 * @throws SystemErrorException
+	 * @throws IllegalInputException
 	 */
 	public String input() throws SystemErrorException, IllegalInputException {
 		try {
@@ -32,7 +38,14 @@ public class MenuNoReader implements IConsoleReader {
 		}
 	}
 
+	/**
+	 * バリデーションチェック
+	 * @param String 入力(メニューNo)
+	 * @return boolean
+	 * @throws SystemErrorException
+	 */
 	public boolean isValid(String input) {
+		//1-7の半角数字
 		return input.matches("[1-7]{1}");
 	}
 }

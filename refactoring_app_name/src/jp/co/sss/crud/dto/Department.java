@@ -1,5 +1,11 @@
 package jp.co.sss.crud.dto;
 
+/**
+ * 部署情報エンティティ
+ * 
+ * @author 絹川
+ */
+
 public class Department {
 
 	//部署ID

@@ -8,14 +8,20 @@ import jp.co.sss.crud.exception.IllegalInputException;
 import jp.co.sss.crud.exception.SystemErrorException;
 import jp.co.sss.crud.util.ConstantMsg;
 
+/**
+ * コンソールの社員ID入力クラス
+ * 
+ * @author 絹川
+ */
 public class EmployeeEmpIdReader implements IConsoleReader {
 
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 	/**
 	 * 社員ID入力
-	 * @return int 社員ID
-	 * @throws IOException
+	 * @return String 社員ID
+	 * @throws SystemErrorException
+	 * @throws IllegalInputException
 	 */
 	public String input() throws SystemErrorException, IllegalInputException {
 		try {
@@ -30,7 +36,14 @@ public class EmployeeEmpIdReader implements IConsoleReader {
 		}
 	}
 
+	/**
+	 * バリデーションチェック
+	 * @param String 入力(社員ID)
+	 * @return boolean
+	 * @throws SystemErrorException
+	 */
 	public boolean isValid(String input) {
+		//半角数字
 		return input.matches("^[0-9]+$");
 	}
 }

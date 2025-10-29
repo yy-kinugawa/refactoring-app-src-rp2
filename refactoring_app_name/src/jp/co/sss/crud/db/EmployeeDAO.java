@@ -17,8 +17,8 @@ import jp.co.sss.crud.util.ConstantMsg;
 import jp.co.sss.crud.util.ConstantSQL;
 
 /**
- * DB操作処理用のクラス
- *
+ * 社員情報のDB操作処理用のクラス
+ * 
  * @author System Shared
  */
 public class EmployeeDAO implements IEmployeeDAO {

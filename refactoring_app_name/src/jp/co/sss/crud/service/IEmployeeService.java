@@ -8,12 +8,17 @@ import jp.co.sss.crud.dto.Employee;
 import jp.co.sss.crud.exception.IllegalInputException;
 import jp.co.sss.crud.exception.SystemErrorException;
 
+/**
+ * 社員情報サービスのインターフェース
+ * 
+ * @author 絹川
+ */
 public interface IEmployeeService {
 
 	/**
 	 * メニューNoによってインスタンス生成
 	 * @param String menuNo
-	 * @return　IEmployeeService 
+	 * @return IEmployeeService 
 	 */
 	public static IEmployeeService getInstanceByMenuNo(String menuNo) {
 		switch (menuNo) {
@@ -37,6 +42,8 @@ public interface IEmployeeService {
 	/**
 	 * メニュー機能実行
 	 * @return boolean
+	 * @throws SystemErrorException 
+	 * @throws IllegalInputException
 	 */
 	public boolean execute() throws SystemErrorException, IllegalInputException;
 
