@@ -11,7 +11,7 @@ import java.sql.SQLException;
 /**
  * データベースに接続するクラス
  *
- * @author System Shared
+ * @author System Shared//
  *
  */
 public class DBManager {
